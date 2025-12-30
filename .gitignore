@@ -1,0 +1,5 @@
+Backup/
+*.*.toe
+
+.vscode/*
+!.vscode/extensions.json
