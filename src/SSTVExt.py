@@ -75,6 +75,10 @@ class SSTVGenerator:
 	def stop(self):
 		self._state = State.READY
 
+	def setMode(self, mode: Mode):
+		self._mode = mode
+		self._init()
+
 	def generateTone(self, freq: float, duration: float):
 		t = np.arange(int(duration * self._sample_rate)) / self._sample_rate
 		phase = 2 * np.pi * freq * t + self._last_phase
@@ -199,3 +203,13 @@ class SSTVExt:
 	def Stop(self):
 		self._switch.par.index = 1
 		self._generator.stop()
+
+	def SetMode(self, mode_name):
+		if mode_name == 'martin1':
+			mode = MartinM1()
+		elif mode_name == 'martin2':
+			mode = MartinM2()
+		else:
+			raise ValueError(f'Unknown mode {mode_name}')
+		self._generator.setMode(mode)
+
